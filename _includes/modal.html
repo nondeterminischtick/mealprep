@@ -1,0 +1,46 @@
+<!-- Confirmation Modal -->
+<div id="confirmation-modal" class="modal">
+    <div class="modal-backdrop" onclick="closeConfirmationModal()"></div>
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title" id="confirmation-title">Confirm Action</h3>
+            <button class="modal-close" aria-label="close" onclick="closeConfirmationModal()">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+                </svg>
+            </button>
+        </div>
+        <div class="modal-body">
+            <p id="confirmation-message">Are you sure?</p>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-error" id="confirmation-confirm" onclick="confirmAction()">Confirm</button>
+            <button class="btn btn-secondary" onclick="closeConfirmationModal()">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<!-- Category Selection Modal -->
+<div id="category-modal" class="modal">
+    <div class="modal-backdrop" onclick="closeCategoryModal()"></div>
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title">Move to Category</h3>
+            <button class="modal-close" aria-label="close" onclick="closeCategoryModal()">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+                </svg>
+            </button>
+        </div>
+        <div class="modal-body">
+            <p class="mb-md">Choose a category for this item:</p>
+            <div id="category-list" class="category-selection">
+                <!-- Categories will be populated here -->
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" onclick="closeCategoryModal()">Cancel</button>
+        </div>
+    </div>
+</div>
+

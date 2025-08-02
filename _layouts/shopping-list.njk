@@ -1,0 +1,60 @@
+---
+layout: base.njk
+---
+
+<div class="card mb-md">
+    <div class="flex gap-md items-center">
+        <input type="text" class="form-input" id="add-item-input" placeholder="Add item to shopping list..." style="flex: 1;" onkeypress="handleAddItemKeypress(event)">
+        <button class="btn btn-primary" onclick="addQuickItem()">
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19,13H13V19H11V13H5V11H11V5H13V11H19V13Z"/>
+            </svg>
+            <span>Add</span>
+        </button>
+    </div>
+</div>
+
+<div class="card mb-lg">
+    <div class="flex gap-md flex-wrap">
+        <button class="btn btn-secondary btn-lg" id="hide-completed-toggle" onclick="toggleHideCompleted()">
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,7A5,5 0 0,0 7,12A5,5 0 0,0 12,17A5,5 0 0,0 17,12A5,5 0 0,0 12,7Z"/>
+            </svg>
+            <span id="hide-toggle-text">Hide Completed</span>
+        </button>
+        <button class="btn btn-success btn-lg" onclick="moveToMealPlan()" id="move-to-meal-plan-btn" style="display: none;">
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z"/>
+            </svg>
+            <span>I've shopped this list</span>
+        </button>
+    </div>
+</div>
+
+<div class="card mb-lg" id="recipe-management">
+    <div id="recipe-list"></div>
+</div>
+
+<div id="shopping-items"></div>
+
+<div class="card mt-lg">
+    <div class="flex gap-md flex-wrap justify-center">
+        <button class="btn btn-success" onclick="moveToMealPlan()" id="move-to-meal-plan-btn-bottom" style="display: none;">
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z"/>
+            </svg>
+            <span>I've shopped this list</span>
+        </button>
+        <button class="btn btn-error" onclick="clearAll()">
+            <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z"/>
+            </svg>
+            <span>Clear All</span>
+        </button>
+    </div>
+</div>
+
+{% block pageScripts %}
+  <script src="/js/meal-plan.js"></script>
+  <script src="/js/shopping-list.js"></script>
+{% endblock %}

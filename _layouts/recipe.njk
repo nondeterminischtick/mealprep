@@ -1,0 +1,152 @@
+---
+layout: base.njk
+---
+
+<h1>{{ title }}</h1>
+<div id="recipe-actions" class="flex gap-md justify-center mb-lg">
+  <button id="start-cooking" class="btn btn-success btn-lg" onclick="startCookingSession()">
+    <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M8,5.14V19.14L19,12.14L8,5.14Z"/>
+    </svg>
+    <span>Start Cooking</span>
+  </button>
+  <button id="shopping-button" class="btn btn-primary btn-lg" onclick="toggleShoppingList()">
+    <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M7,18C7.56,18 8,17.56 8,17C8,16.44 7.56,16 7,16C6.44,16 6,16.44 6,17C6,17.56 6.44,18 7,18M1,2V4H3L6.6,11.59L5.24,14.04C5.09,14.32 5,14.65 5,15A2,2 0 0,0 7,17H19V15H7.42C7.28,15 7.17,14.89 7.17,14.75L7.2,14.63L8.1,13H15.55C16.3,13 16.96,12.58 17.3,11.97L20.88,5H5.21L4.27,3H1M17,18C17.56,18 18,17.56 18,17C18,16.44 17.56,16 17,16C6.44,16 6,16.44 6,17C6,17.56 6.44,18 7,18Z"/>
+    </svg>
+    <span id="shopping-button-text">Add to Shop</span>
+  </button>
+  <button id="meal-plan-button" class="btn btn-secondary btn-lg" onclick="addRecipeToMealPlan()">
+    <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M8,3H16A3,3 0 0,1 19,6V8H21V10H20V19A2,2 0 0,1 18,21H6A2,2 0 0,1 4,19V10H3V8H5V6A3,3 0 0,1 8,3M8,5A1,1 0 0,0 7,6V8H17V6A1,1 0 0,0 16,5H8M6,10V19H18V10H6Z"/>
+    </svg>
+    <span>Add to Plan</span>
+  </button>
+</div>
+
+<div id="recipe-metadata" class="grid grid-4 mb-lg">
+  {% if Prep %}
+  <div class="card card-compact text-center">
+    <div class="text-sm text-muted mb-sm">Prep Time</div>
+    <div class="text-lg" id="recipe-prep-time">{{ Prep }} min</div>
+  </div>
+  {% endif %}
+  {% if Total %}
+  <div class="card card-compact text-center">
+    <div class="text-sm text-muted mb-sm">Total Time</div>
+    <div class="text-lg" id="recipe-total-time">{{ Total }} min</div>
+  </div>
+  {% endif %}
+  {% if Servings %}
+  <div class="card card-compact text-center">
+    <div class="text-sm text-muted mb-sm">Servings</div>
+    <div class="text-lg" id="recipe-servings">{{ Servings }}</div>
+  </div>
+  {% endif %}
+  {% if Notes %}
+  <div class="card card-compact text-center">
+    <div class="text-sm text-muted mb-sm">Notes</div>
+    <div class="text-sm" id="recipe-notes">{{ Notes }}</div>
+  </div>
+  {% endif %}
+</div>
+
+<div id="recipe-tabs" class="recipe-tabs mb-lg">
+  <div class="tab-nav">
+    <button class="tab-btn active" data-tab="ingredients" onclick="showRecipeTab('ingredients')">
+      <svg class="tab-icon" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M9,5V9H21V5M9,19H21V15H9M9,14H21V10H9M4,9H8L6,7M4,19H8L6,17M4,14H8L6,12"/>
+      </svg>
+      <span>Ingredients</span>
+    </button>
+    <button class="tab-btn" data-tab="method" onclick="showRecipeTab('method')">
+      <svg class="tab-icon" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M19,3H14.82C14.4,1.84 13.3,1 12,1C10.7,1 9.6,1.84 9.18,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M12,3A1,1 0 0,1 13,4A1,1 0 0,1 12,5A1,1 0 0,1 11,4A1,1 0 0,1 12,3"/>
+      </svg>
+      <span>Method</span>
+    </button>
+  </div>
+</div>
+
+<div id="recipe-content-card" class="card">
+  <div id="ingredients-panel" class="recipe-tab-panel active">
+    <div id="ingredients-content"></div>
+  </div>
+  
+  <div id="method-panel" class="recipe-tab-panel hidden">
+    <div id="method-content"></div>
+  </div>
+</div>
+
+<!-- Cooking Session UI (hidden by default) -->
+<div id="cooking-session" class="hidden">
+  <!-- Back to Recipe Button and Reset Progress -->
+  <div class="flex gap-md mb-lg">
+    <button class="btn btn-secondary btn-lg" onclick="exitCookingSession()">
+      <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z"/>
+      </svg>
+      Back to Recipe
+    </button>
+    <button class="btn btn-warning btn-lg" onclick="resetCookingProgress()">
+      <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M17.65,6.35C16.2,4.9 14.21,4 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20C15.73,20 18.84,17.45 19.73,14H17.65C16.83,16.33 14.61,18 12,18A6,6 0 0,1 6,12A6,6 0 0,1 12,6C13.66,6 15.14,6.69 16.22,7.78L13,11H20V4L17.65,6.35Z"/>
+      </svg>
+      Reset Progress
+    </button>
+  </div>
+
+  <!-- Progress Bar -->
+  <div class="progress-container mb-lg">
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+    <div class="progress-text" id="progress-text">0 of 0 steps completed</div>
+  </div>
+
+  <!-- Cooking Tabs -->
+  <div class="recipe-tabs mb-lg">
+    <div class="tab-nav">
+      <button class="tab-btn active" data-tab="cooking-ingredients" onclick="showCookingTab('cooking-ingredients')">
+        <svg class="tab-icon" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M9,5V9H21V5M9,19H21V15H9M9,14H21V10H9M4,9H8L6,7M4,19H8L6,17M4,14H8L6,12"/>
+        </svg>
+        <span>Ingredients</span>
+      </button>
+      <button class="tab-btn" data-tab="cooking-method" onclick="showCookingTab('cooking-method')">
+        <svg class="tab-icon" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M19,3H14.82C14.4,1.84 13.3,1 12,1C10.7,1 9.6,1.84 9.18,3H5A2,2 0 0,0 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V5A2,2 0 0,0 19,3M12,3A1,1 0 0,1 13,4A1,1 0 0,1 12,5A1,1 0 0,1 11,4A1,1 0 0,1 12,3"/>
+        </svg>
+        <span>Method</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="card">
+    <!-- Ingredients Tab -->
+    <div id="cooking-ingredients-tab" class="recipe-tab-panel active">
+      <div class="card-header">
+        <h3 class="card-title">Ingredients</h3>
+      </div>
+      <div id="cooking-ingredients-list"></div>
+    </div>
+
+    <!-- Method Tab -->
+    <div id="cooking-method-tab" class="recipe-tab-panel hidden">
+      <div class="card-header">
+        <h3 class="card-title">Method</h3>
+      </div>
+      <div id="cooking-method-list"></div>
+    </div>
+  </div>
+</div>
+
+<div id="recipe-content" style="display: none;">{{ content | safe }}</div>
+
+{% block pageScripts %}
+  <script src="/js/shopping-list.js"></script>
+  <script src="/js/meal-plan.js"></script>
+  <script src="/js/recipe.js"></script>
+{% endblock %}
+
+
