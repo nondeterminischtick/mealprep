@@ -10,7 +10,7 @@ module.exports.config = {
   dir: {
     input: "content",
     output: "_site",
-	  includes: "_includes",
+    includes: "_includes",
     layouts: "../_layouts",
     data: "_data"
   },
