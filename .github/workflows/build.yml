@@ -1,7 +1,7 @@
 # This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
 
-name: Node.js CI
+name: Publish Site
 
 on:
   push:
@@ -51,4 +51,4 @@ jobs:
         run: ssh-keyscan -p ${{ secrets.SSH_PORT}} -H ${{ secrets.SSH_HOST }}  >> ~/.ssh/known_hosts
         
       - name: Deploy blog with rsync
-        run: rsync -avz -e "ssh -p ${{ secrets.SSH_PORT }}" ./_site ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/var/www/mealprep --delete-after
+        run: rsync -avz -e "ssh -p ${{ secrets.SSH_PORT }}" ./_site/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/var/www/mealprep --delete-after
