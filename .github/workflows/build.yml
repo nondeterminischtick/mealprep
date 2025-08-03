@@ -51,4 +51,4 @@ jobs:
         run: ssh-keyscan -p ${{ secrets.SSH_PORT}} -H ${{ secrets.SSH_HOST }}  >> ~/.ssh/known_hosts
         
       - name: Deploy blog with rsync
-        run: rsync -avz -e "ssh -p ${{ secrets.SSH_PORT }}" ./_site ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:$WWW --delete-after
+        run: rsync -avz -e "ssh -p ${{ secrets.SSH_PORT }}" ./_site ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/var/www/mealprep --delete-after
